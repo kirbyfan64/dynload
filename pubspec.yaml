@@ -1,0 +1,9 @@
+name: dynload
+version: 0.1.0
+description: >
+  dynload makes it easy (or, at least easier) to dynamically load imports at
+  runtime.
+author: Ryan Gonzalez <rymg19@gmail.com>
+homepage: https://github.com/kirbyfan64/dynload
+dependencies:
+  path: any
