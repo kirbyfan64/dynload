@@ -1,4 +1,5 @@
 import 'package:dynload/dynload.dart';
+import 'dart:async';
 import 'dart:mirrors';
 
 
@@ -15,7 +16,7 @@ void isa(var lhs, Type ty) {
 }
 
 
-void cb(ProxyLib lib, var message) async {
+Future cb(ProxyLib lib, var message) async {
   eq(message, 'Hello, world!');
 
   eq(lib.howMany, 3);
@@ -25,7 +26,7 @@ void cb(ProxyLib lib, var message) async {
   eq(cls.howMany, 3);
   eq(cls.howManyFunc(), 3);
 
-  eq(proxyNew(lib, #MyClass)().which, 1);
+  eq((proxyNew(lib, #MyClass) as dynamic)().which, 1);
   eq(proxyNew(lib, #MyClass).second().which, 2);
   eq(proxyNew(lib, #MyClass).third().which, 3);
 

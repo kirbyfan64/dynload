@@ -10,6 +10,7 @@ import 'package:path/path.dart' as path;
 
 /// A proxy library. Wraps an underlying ClassMirror and forwards all method
 /// accesses to the mirror.
+@proxy
 class ProxyClass {
   ClassMirror _cls;
   /// Creates a [ProxyClass] that wraps the given ClassMirror.
@@ -33,6 +34,7 @@ class ProxyClass {
 ///     var ctor = proxyNew(lib, #MyClass);
 ///     print(ctor(1));         // Equivalent to `new lib.MyClass(1)`.
 ///     print(ctor.factory(1)); // Equivalent to `new lib.MyClass.factory(1)`.
+@proxy
 class ProxyConstructor {
   ClassMirror _cls;
   /// Creates a [ProxyConstructor] that wraps the given ClassMirror.
@@ -54,6 +56,7 @@ class ProxyConstructor {
 
 /// A proxy library. Wraps an underlying LibraryMirror and forwards all
 /// method accesses to the mirror.
+@proxy
 class ProxyLib {
   LibraryMirror _lib;
   /// Creates a [ProxyLib] that wraps the given LibraryMirror.

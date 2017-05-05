@@ -8,6 +8,6 @@ run() {
 }
 
 
-run dartanalyzer lib/dynload.dart
+run dartanalyzer lib/dynload.dart tst/cb.dart
 run dart tst/tst.dart
 exit $ret
