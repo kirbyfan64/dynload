@@ -147,10 +147,10 @@ Future dynload(Uri uri, RemoteCallback cb,
   import '${self.toString()}';
   import 'dart:mirrors';
 
-  void main(var _, var message) {
+  void main(var _, var message) async {
     var uri = Uri.parse(message[0]);
-    cb.${cb.func}(new ProxyLib(currentMirrorSystem().libraries[uri]),
-                  message[1]);
+    await cb.${cb.func}(new ProxyLib(currentMirrorSystem().libraries[uri]),
+                        message[1]);
   }
   """;
 

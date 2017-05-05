@@ -15,7 +15,7 @@ void isa(var lhs, Type ty) {
 }
 
 
-void cb(ProxyLib lib, var message) {
+void cb(ProxyLib lib, var message) async {
   eq(message, 'Hello, world!');
 
   eq(lib.howMany, 3);
