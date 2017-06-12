@@ -148,12 +148,17 @@ Future dynload(Uri uri, RemoteCallback cb,
   import '${uristr}';
   import '${cb.module.toString()}' as cb;
   import '${self.toString()}';
+  import 'dart:io';
   import 'dart:mirrors';
 
   void main(var _, var message) async {
-    var uri = Uri.parse(message[0]);
-    await cb.${cb.func}(new ProxyLib(currentMirrorSystem().libraries[uri]),
-                        message[1]);
+    try {
+      var uri = Uri.parse(message[0]);
+      await cb.${cb.func}(new ProxyLib(currentMirrorSystem().libraries[uri]),
+                          message[1]);
+    } finally {
+      new Directory(message[2]).deleteSync(recursive: true);
+    }
   }
   """;
 
@@ -164,7 +169,8 @@ Future dynload(Uri uri, RemoteCallback cb,
   packageRoot ??= await Isolate.packageRoot;
 
   var recv = new ReceivePort();
-  await Isolate.spawnUri(new Uri.file(stub.path), [], [uristr, message],
+  await Isolate.spawnUri(new Uri.file(stub.path), [],
+                         [uristr, message, tmpdir.path],
                          packageRoot: packageRoot,
                          errorsAreFatal: true,
                          onError: recv.sendPort,
@@ -172,6 +178,7 @@ Future dynload(Uri uri, RemoteCallback cb,
 
   var error = await recv.first;
   if (error != null) {
+    tmpdir.deleteSync(recursive: true);
     var err = error[0];
     var trace = error[1];
     throw new RemoteException(err, trace);
