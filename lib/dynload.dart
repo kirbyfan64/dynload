@@ -178,7 +178,9 @@ Future dynload(Uri uri, RemoteCallback cb,
 
   var error = await recv.first;
   if (error != null) {
-    tmpdir.deleteSync(recursive: true);
+    try {
+      tmpdir.deleteSync(recursive: true);
+    } on FileSystemException {}
     var err = error[0];
     var trace = error[1];
     throw new RemoteException(err, trace);
